@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "modid",
+  "version": "${version}",
+
+  "name": "Custom Stars",
+  "description": "Simple configurable stars.",
+  "authors": [
+    "b3spectacled"
+  ],
+  "contact": {
+    "homepage": "https://github.com/b3spectacled/",
+    "sources": "https://github.com/b3spectacled/custom-stars"
+  },
+
+  "license": "LGPLv3",
+  "icon": "assets/customstars/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.bespectacled.customstars.CustomStars"
+    ]
+  },
+  "mixins": [
+    "custom_stars.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
