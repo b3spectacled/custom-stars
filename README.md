@@ -1,4 +1,4 @@
-# Classic Stars
+# Custom Stars
 
 ## Setup
 
