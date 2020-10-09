@@ -18,13 +18,16 @@ public final class CustomStarsConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path PATH = Paths.get("config", "customstars.json");
     
-    //public boolean render_old_stars;
-    public static final int CURRENT_VERSION = 0;
+    public static final int CURRENT_VERSION = 1;
     public final int VERSION;
     
     public final float base_size;
     public final float max_size_multiplier;
     public final int star_count;
+    public final int red;
+    public final int green;
+    public final int blue;
+    public final float alpha;
     
     public CustomStarsConfig() {
         this.VERSION = CURRENT_VERSION;
@@ -32,6 +35,10 @@ public final class CustomStarsConfig {
         this.base_size = 0.15f;
         this.max_size_multiplier = 0.1f;
         this.star_count = 1500;
+        this.red = 255;
+        this.green = 255;
+        this.blue = 255;
+        this.alpha = 1.0f;
     }
     
     public static CustomStarsConfig loadConfig() {

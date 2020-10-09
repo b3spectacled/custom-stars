@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "customstars",
   "version": "${version}",
 
   "name": "Custom Stars",
