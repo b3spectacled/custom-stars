@@ -10,7 +10,7 @@ public class CustomStarsModMenu implements ModMenuApi {
     public String getModId() {
         return "customstars";
     }
-    
+
     @Override
     public ConfigScreenFactory<Screen> getModConfigScreenFactory() {
         return screen -> AutoConfig.getConfigScreen(CustomStarsConfig.class, screen).get();

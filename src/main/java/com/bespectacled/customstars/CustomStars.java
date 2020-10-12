@@ -17,16 +17,17 @@ import net.fabricmc.loader.api.FabricLoader;
 public class CustomStars implements ModInitializer {
     public static final String ID = "custom_stars";
     public static final Logger LOGGER = LogManager.getLogger("CustomStars");
-    public static final CustomStarsConfig STARS_CONFIG = AutoConfig.register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
-    
+    public static final CustomStarsConfig STARS_CONFIG = AutoConfig
+            .register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
+
     @Override
     public void onInitialize() {
         LOGGER.log(Level.INFO, "Initializing Custom Stars...");
-        
+
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             GoVote.init();
         }
-        
+
         LOGGER.log(Level.INFO, "Initialized Custom Stars!");
     }
 }
