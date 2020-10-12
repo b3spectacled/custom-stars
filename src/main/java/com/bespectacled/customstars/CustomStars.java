@@ -17,7 +17,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class CustomStars implements ModInitializer {
     public static final String ID = "custom_stars";
     public static final Logger LOGGER = LogManager.getLogger("CustomStars");
-    public static final CustomStarsConfig CONFIG = AutoConfig.register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
+    public static final CustomStarsConfig STARS_CONFIG = AutoConfig.register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
     
     @Override
     public void onInitialize() {
