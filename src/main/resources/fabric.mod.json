@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "com.bespectacled.customstars.CustomStars"
+    ],
+    "modmenu": [
+      "com.bespectacled.customstars.config.CustomStarsModMenu"
     ]
   },
   "mixins": [

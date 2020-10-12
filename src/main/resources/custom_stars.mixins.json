@@ -7,8 +7,7 @@
   ],
   "client": [
     "MixinWorldRenderer",
-    "MixinMinecraftClient",
-    "MixinClientWorld"
+    "MixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1

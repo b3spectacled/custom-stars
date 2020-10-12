@@ -1,89 +1,40 @@
 package com.bespectacled.customstars.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.bespectacled.customstars.CustomStars;
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.apache.logging.log4j.Level;
-
-public final class CustomStarsConfig {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path PATH = Paths.get("config", "customstars.json");
+@Config(name = "customstars")
+public class CustomStarsConfig implements ConfigData {
     
-    public static final int CURRENT_VERSION = 1;
-    public final int VERSION;
+    @ConfigEntry.Category(value = "starsBasic")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public float baseSize = 0.15f;
     
-    public final float base_size;
-    public final float max_size_multiplier;
-    public final int star_count;
-    public final int red;
-    public final int green;
-    public final int blue;
-    public final float alpha;
+    @ConfigEntry.Category(value = "starsBasic")
+    @ConfigEntry.Gui.Tooltip(count = 3)
+    public float maxSizeMultiplier = 0.1f;
     
-    public CustomStarsConfig() {
-        this.VERSION = CURRENT_VERSION;
-        
-        this.base_size = 0.15f;
-        this.max_size_multiplier = 0.1f;
-        this.star_count = 1500;
-        this.red = 255;
-        this.green = 255;
-        this.blue = 255;
-        this.alpha = 1.0f;
-    }
+    @ConfigEntry.Category(value = "starsBasic")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public int starCount = 1500;
     
-    public static CustomStarsConfig loadConfig() {
-        return readConfig();
-    }
+    @ConfigEntry.Category(value = "starsColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    @ConfigEntry.BoundedDiscrete(max = 255)
+    public int red = 255;
     
-    private static CustomStarsConfig createConfig() {
-        CustomStarsConfig config = new CustomStarsConfig();
-        
-        try {
-            if (!Files.exists(PATH))
-                Files.createDirectories(PATH.getParent());
-            
-            FileWriter writer = new FileWriter(PATH.toFile());
-            writer.write(GSON.toJson(config));
-            writer.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        return config;
-    }
+    @ConfigEntry.Category(value = "starsColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    @ConfigEntry.BoundedDiscrete(max = 255)
+    public int green = 255;
     
-    private static CustomStarsConfig readConfig() {
-        CustomStarsConfig config = null;
-        
-        try {
-            BufferedReader bufferedReader = new BufferedReader(
-                new FileReader(PATH.toFile())
-            );
-            
-            config = GSON.fromJson(bufferedReader, CustomStarsConfig.class);
-        }
-        catch (IOException e) {
-            CustomStars.LOGGER.log(Level.WARN, "Config file not found, creating...");
-            createConfig();
-        }
-        
-        if (config == null || config.VERSION != CURRENT_VERSION) {
-            CustomStars.LOGGER.log(Level.WARN, "Missing or outdated config, recreating...");
-            config = createConfig();
-        }
-        
-        return config;
-    }
-
+    @ConfigEntry.Category(value = "starsColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    @ConfigEntry.BoundedDiscrete(max = 255)
+    public int blue = 255;
+    
+    @ConfigEntry.Category(value = "starsColor")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public float alpha = 1.0f;
 }
