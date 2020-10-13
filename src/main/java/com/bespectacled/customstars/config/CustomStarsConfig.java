@@ -8,15 +8,15 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 public class CustomStarsConfig implements ConfigData {
 
     @ConfigEntry.Category(value = "starsBasic")
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip(count = 1)
     public float baseSize = 0.15f;
 
     @ConfigEntry.Category(value = "starsBasic")
-    @ConfigEntry.Gui.Tooltip(count = 3)
+    @ConfigEntry.Gui.Tooltip(count = 2)
     public float maxSizeMultiplier = 0.1f;
 
     @ConfigEntry.Category(value = "starsBasic")
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip(count = 1)
     public int starCount = 1500;
 
     @ConfigEntry.Category(value = "starsColor")
