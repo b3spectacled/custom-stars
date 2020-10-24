@@ -21,6 +21,7 @@ import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferBuilderStorage;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.WorldRenderer;
 
@@ -94,6 +95,17 @@ public class MixinWorldRenderer {
         }
     }
     
+    /* End Sky */
+    @Redirect(method = "renderEndSky", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumer;color(IIII)Lnet/minecraft/client/render/VertexConsumer;"))
+    private VertexConsumer modifyEndSkyColor(VertexConsumer self, int r, int g, int b, int a) {
+        
+        return self.color(STARS_CONFIG.endRed, STARS_CONFIG.endGreen, STARS_CONFIG.endBlue, (int)(a * STARS_CONFIG.endAlpha));
+    }
+    
+    @ModifyConstant(method = "renderEndSky", constant = @Constant(floatValue = 16.0f))
+    private float modifyTextureSize(float size) {
+        return size * STARS_CONFIG.endSize;
+    }
 
     /*
      * @Redirect( method =
