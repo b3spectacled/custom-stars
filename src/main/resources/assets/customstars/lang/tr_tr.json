@@ -1,0 +1,37 @@
+{
+    "text.autoconfig.customstars.title": "Custom Stars (Özel Yıldızlar) Ayarları",
+    "text.autoconfig.customstars.category.starsBasic": "Yıldız Sayısı/Boyutu",
+    "text.autoconfig.customstars.category.starsColor": "Yıldız Rengi",
+    "text.autoconfig.customstars.category.endColor": "End Gökyüzü Rengi",
+    
+    "text.autoconfig.customstars.option.baseSize": "Baz Boyutu",
+    "text.autoconfig.customstars.option.baseSize.@Tooltip": "Yıldızın referans boyutu.",
+    "text.autoconfig.customstars.option.maxSizeMultiplier": "Maksimum Yıldız Boyut Çarpanı",
+    "text.autoconfig.customstars.option.maxSizeMultiplier.@Tooltip[0]": "Yıldızın maksimum boyutu için çarpan.",
+    "text.autoconfig.customstars.option.maxSizeMultiplier.@Tooltip[1]": "Yüksek değerler yıldızın maksimum boyutunu arttıracak.",
+    "text.autoconfig.customstars.option.starCount": "Yıldız Sayısı",
+    "text.autoconfig.customstars.option.starCount.@Tooltip": "Gösterilecek yıldız sayısı.",
+    
+    "text.autoconfig.customstars.option.red": "Red/Kırmızı",
+    "text.autoconfig.customstars.option.red.@Tooltip": "Yıldızların kırmızılığı. (0-255)",
+    "text.autoconfig.customstars.option.green": "Green/Yeşil",
+    "text.autoconfig.customstars.option.green.@Tooltip": "Yıldızların yeşilliği. (0-255)",
+    "text.autoconfig.customstars.option.blue": "Blue/Mavi",
+    "text.autoconfig.customstars.option.blue.@Tooltip": "Yıldızların maviliği. (0-255)",
+    "text.autoconfig.customstars.option.alpha": "Opaklık",
+    "text.autoconfig.customstars.option.alpha.@Tooltip[0]": "Ortalama yıldız parlaklığı için çarpan.",
+    "text.autoconfig.customstars.option.alpha.@Tooltip[1]": "0 opaklık ayarlamak tüm yıldızları gizleyecektir",
+    
+    "text.autoconfig.customstars.option.endRed": "Red/Kırmızı",
+    "text.autoconfig.customstars.option.endRed.@Tooltip": "End gökyüzünün kırmızılığı. (0-255)",
+    "text.autoconfig.customstars.option.endGreen": "Green/Yeşil",
+    "text.autoconfig.customstars.option.endGreen.@Tooltip": "End gökyüzünün yeşilliği. (0-255)",
+    "text.autoconfig.customstars.option.endBlue": "Blue/Mavi",
+    "text.autoconfig.customstars.option.endBlue.@Tooltip": "End gökyüzünün maviliği. (0-255)",
+    "text.autoconfig.customstars.option.endAlpha": "Opaklık",
+    "text.autoconfig.customstars.option.endAlpha.@Tooltip[0]": "Ortalama End gökyüzü parlaklığı için çarpan.",
+    "text.autoconfig.customstars.option.endAlpha.@Tooltip[1]": "0 opaklık ayarlamak End gökyüzünü gizleyecektir",
+    
+    "text.autoconfig.customstars.option.endSize": "Boyut Çarpanı",
+    "text.autoconfig.customstars.option.endSize.@Tooltip": "End gökyüzü dokusunun boyutu için çarpan. (0.0-1.0)"
+}
