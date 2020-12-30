@@ -1,7 +1,11 @@
 package com.bespectacled.customstars.mixin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -10,6 +14,7 @@ import com.bespectacled.customstars.config.CustomStarsConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,6 +28,7 @@ import net.minecraft.client.render.BufferBuilderStorage;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
@@ -71,7 +77,6 @@ public class MixinWorldRenderer {
         RenderSystem.color4f(red, green, blue, alpha);
     }
     
-    
     @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;F)V", at = @At("HEAD"))
     private void reloadStars(CallbackInfo info) {
         if (this.prevStarBaseSize != STARS_CONFIG.baseSize ||
@@ -83,7 +88,8 @@ public class MixinWorldRenderer {
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();
 
-            this.starsBuffer = new VertexBuffer(this.skyVertexFormat);
+            //this.starsBuffer = new VertexBuffer(this.skyVertexFormat);
+            this.starsBuffer = new VertexBuffer(VertexFormats.POSITION_COLOR);
             ((MixinWorldRendererInvoker)this).rerenderStars(builder);
            
             builder.end();
@@ -106,13 +112,4 @@ public class MixinWorldRenderer {
     private float modifyTextureSize(float size) {
         return size * STARS_CONFIG.endSize;
     }
-
-    /*
-     * @Redirect( method =
-     * "renderSky(Lnet/minecraft/client/util/math/MatrixStack;F)V", at = @At(value =
-     * "INVOKE", target =
-     * "Lnet/minecraft/client/world/ClientWorld;method_23787(F)F") ) private float
-     * modifyStarTime(ClientWorld self, float tickDelta) { return
-     * self.method_23787(tickDelta) * (1.0f - self.getRainGradient(tickDelta)); }
-     */
 }
