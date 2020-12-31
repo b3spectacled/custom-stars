@@ -88,8 +88,7 @@ public class MixinWorldRenderer {
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();
 
-            //this.starsBuffer = new VertexBuffer(this.skyVertexFormat);
-            this.starsBuffer = new VertexBuffer(VertexFormats.POSITION_COLOR);
+            this.starsBuffer = new VertexBuffer(this.skyVertexFormat);
             ((MixinWorldRendererInvoker)this).rerenderStars(builder);
            
             builder.end();
@@ -104,7 +103,6 @@ public class MixinWorldRenderer {
     /* End Sky */
     @Redirect(method = "renderEndSky", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumer;color(IIII)Lnet/minecraft/client/render/VertexConsumer;"))
     private VertexConsumer modifyEndSkyColor(VertexConsumer self, int r, int g, int b, int a) {
-        
         return self.color(STARS_CONFIG.endRed, STARS_CONFIG.endGreen, STARS_CONFIG.endBlue, (int)(a * STARS_CONFIG.endAlpha));
     }
     
