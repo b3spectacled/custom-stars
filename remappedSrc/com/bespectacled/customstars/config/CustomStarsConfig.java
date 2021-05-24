@@ -1,8 +1,8 @@
 package com.bespectacled.customstars.config;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 
 @Config(name = "customstars")
 public class CustomStarsConfig implements ConfigData {
@@ -18,23 +18,6 @@ public class CustomStarsConfig implements ConfigData {
     @ConfigEntry.Category(value = "starsBasic")
     @ConfigEntry.Gui.Tooltip(count = 1)
     public int starCount = 1500;
-    
-    @ConfigEntry.Category(value = "starsNoise")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    public boolean starNoise = false;
-    
-    @ConfigEntry.Category(value = "starsNoise")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    public long starNoiseSeed = 10842L;
-    
-    @ConfigEntry.Category(value = "starsNoise")
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public double starNoiseThreshold = 0.5;
-    
-    @ConfigEntry.Category(value = "starsNoise")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 100, min = 0)
-    public int starNoisePercentage = 50;
 
     @ConfigEntry.Category(value = "starsColor")
     @ConfigEntry.Gui.Tooltip(count = 1)
