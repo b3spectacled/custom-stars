@@ -20,11 +20,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.world.gen.ChunkRandom;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
 public class MixinWorldRenderer {
@@ -32,7 +34,6 @@ public class MixinWorldRenderer {
     @Unique private CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
     
     @Shadow private VertexBuffer starsBuffer;
-    @Shadow private VertexFormat skyVertexFormat;
     
     @Inject(method = "renderStars(Lnet/minecraft/client/render/BufferBuilder;)V", at = @At("HEAD"), cancellable = true)
     private void injectRenderStarsWithNoise(BufferBuilder builder, CallbackInfo info) {
@@ -65,25 +66,26 @@ public class MixinWorldRenderer {
         return STARS_CONFIG.starCount;
     }
 
-    @Redirect(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;F)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;color4f(FFFF)V", ordinal = 1))
+    @Redirect(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;F)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 3))
     private void modifyStarColor(float r, float g, float b, float a) {
         float red = r * STARS_CONFIG.red / 255F;
         float green = g * STARS_CONFIG.green / 255F;
         float blue = b * STARS_CONFIG.blue / 255F;
         float alpha = a * STARS_CONFIG.alpha;
 
-        RenderSystem.color4f(red, green, blue, alpha);
+        RenderSystem.setShaderColor(red, green, blue, alpha);
     }
     
-    @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;F)V", at = @At("HEAD"))
+    @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;F)V", at = @At("HEAD"))
     private void reloadStars(CallbackInfo info) {
         if (CustomStars.STARS_RERENDER_OBSERVER.update()) {
             CustomStars.LOGGER.log(Level.INFO, "Star settings modified, reloading buffer...");
             
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();
+            RenderSystem.setShader(GameRenderer::getPositionShader);
 
-            this.starsBuffer = new VertexBuffer(this.skyVertexFormat);
+            this.starsBuffer = new VertexBuffer();
             ((MixinWorldRendererInvoker)this).rerenderStars(builder);
            
             builder.end();
@@ -113,7 +115,7 @@ public class MixinWorldRenderer {
         double noiseThreshold
     ) {
         Random random = new Random(10842L);
-        OctaveSimplexNoise fieldSampler = new OctaveSimplexNoise(new Random(seed), 3);
+        OctaveSimplexNoise fieldSampler = new OctaveSimplexNoise(new ChunkRandom(seed), 3);
         
         // Cap noise threshold
         if (noiseThreshold > 1.0)
@@ -152,7 +154,7 @@ public class MixinWorldRenderer {
             stars++;
         }
         
-        buffer.begin(7, VertexFormats.POSITION);
+        buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
         
         for (int i = 0; i < starCount; ++i) {
             double double5 = ipts[i];

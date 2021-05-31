@@ -1,14 +1,13 @@
 package com.bespectacled.customstars.noise;
 
-import java.util.Random;
-
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
+import net.minecraft.world.gen.WorldGenRandom;
 
 public class OctaveSimplexNoise {
     private final SimplexNoiseSampler[] generators;
     private final int octaves;
     
-    public OctaveSimplexNoise(Random random, int octaves) {
+    public OctaveSimplexNoise(WorldGenRandom random, int octaves) {
         this.octaves = octaves;
         this.generators = new SimplexNoiseSampler[octaves];
         
@@ -26,7 +25,7 @@ public class OctaveSimplexNoise {
         double lacunarity = 2.0D;
         
         for (int i = 0; i < this.octaves; ++i) {
-            total += this.generators[i].method_22416(x * frequency, y * frequency, z * frequency) * amplitude;
+            total += this.generators[i].sample(x * frequency, y * frequency, z * frequency) * amplitude;
             
             amplitude *= persistence;
             frequency *= lacunarity;
