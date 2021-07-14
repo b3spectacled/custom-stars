@@ -13,7 +13,7 @@
     "sources": "https://github.com/b3spectacled/custom-stars"
   },
 
-  "license": "LGPLv3",
+  "license": "MIT",
   "icon": "assets/customstars/icon.png",
 
   "environment": "*",
