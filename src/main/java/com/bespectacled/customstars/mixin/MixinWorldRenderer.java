@@ -79,7 +79,7 @@ public class MixinWorldRenderer {
     @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLjava/lang/Runnable;)V", at = @At("HEAD"))
     private void reloadStars(CallbackInfo info) {
         if (CustomStars.STARS_RERENDER_OBSERVER.update()) {
-            CustomStars.LOGGER.log(Level.INFO, "[Custom Stars] Star settings modified, reloading buffer...");
+            CustomStars.log(Level.INFO, "Star settings modified, reloading buffer...");
             
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();

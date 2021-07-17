@@ -27,7 +27,7 @@ public class CustomStarsConfigObserver {
             Object newValue = DEFAULT_OPTIONS.get(option).get();
             
             if (!OPTIONS.get(option).equals(newValue)) {
-                CustomStars.LOGGER.log(Level.INFO, "[Custom Stars] Setting '" + option + "' was updated.");
+                CustomStars.log(Level.INFO, "Setting '" + option + "' was updated.");
                 
                 OPTIONS.put(option, newValue);
                 updated = true;
