@@ -30,8 +30,7 @@ import net.minecraft.world.gen.ChunkRandom;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
 public class MixinWorldRenderer {
-
-    @Unique private CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
+    @Unique private static final CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
     
     @Shadow private VertexBuffer starsBuffer;
     
