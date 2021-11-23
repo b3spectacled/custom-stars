@@ -28,8 +28,7 @@ import net.minecraft.client.render.WorldRenderer;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
 public class MixinWorldRenderer {
-
-    @Unique private CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
+    @Unique private static final CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
     
     @Shadow private VertexBuffer starsBuffer;
     @Shadow private VertexFormat skyVertexFormat;
@@ -78,7 +77,7 @@ public class MixinWorldRenderer {
     @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;F)V", at = @At("HEAD"))
     private void reloadStars(CallbackInfo info) {
         if (CustomStars.STARS_RERENDER_OBSERVER.update()) {
-            CustomStars.LOGGER.log(Level.INFO, "Star settings modified, reloading buffer...");
+            CustomStars.log(Level.INFO, "Star settings modified, reloading buffer...");
             
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();

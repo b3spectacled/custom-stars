@@ -12,16 +12,21 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 
 public class CustomStars implements ModInitializer {
-    public static final String ID = "custom_stars";
-    public static final Logger LOGGER = LogManager.getLogger("CustomStars");
-    public static final CustomStarsConfig STARS_CONFIG = AutoConfig
-            .register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
+    public static final String MOD_ID = "custom_stars";
+    public static final String MOD_NAME = "Custom Stars";
     
+    public static final CustomStarsConfig STARS_CONFIG = AutoConfig.register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
     public static final CustomStarsConfigObserver STARS_RERENDER_OBSERVER = new CustomStarsConfigObserver();
+    
+    private static final Logger LOGGER = LogManager.getLogger("CustomStars");
 
+    public static void log(Level level, String message) {
+        LOGGER.log(level, "[" + MOD_NAME + "] {}", message);
+    }
+    
     @Override
     public void onInitialize() {
-        LOGGER.log(Level.INFO, "Initializing Custom Stars...");
+        log(Level.INFO, "Initializing Custom Stars...");
         
         // Register config option observables, for star rerendering
         STARS_RERENDER_OBSERVER.registerObservable("baseSize", () -> STARS_CONFIG.baseSize);

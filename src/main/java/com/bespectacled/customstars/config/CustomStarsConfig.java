@@ -55,6 +55,21 @@ public class CustomStarsConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 2)
     public float alpha = 1.0f;
     
+    @ConfigEntry.Category(value = "skyColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    @ConfigEntry.BoundedDiscrete(max = 255)
+    public int skyRed = 0;
+    
+    @ConfigEntry.Category(value = "skyColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    @ConfigEntry.BoundedDiscrete(max = 255)
+    public int skyGreen = 0;
+    
+    @ConfigEntry.Category(value = "skyColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    @ConfigEntry.BoundedDiscrete(max = 255)
+    public int skyBlue = 0;
+    
     @ConfigEntry.Category(value = "endColor")
     @ConfigEntry.Gui.Tooltip(count = 1)
     public float endSize = 1.0f;
