@@ -26,7 +26,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.world.gen.ChunkRandom;
+import net.minecraft.world.gen.random.AtomicSimpleRandom;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
 public class MixinWorldRenderer {
@@ -114,7 +114,7 @@ public class MixinWorldRenderer {
         double noiseThreshold
     ) {
         Random random = new Random(10842L);
-        OctaveSimplexNoise fieldSampler = new OctaveSimplexNoise(new ChunkRandom(seed), 3);
+        OctaveSimplexNoise fieldSampler = new OctaveSimplexNoise(new AtomicSimpleRandom(seed), 3);
         
         // Cap noise threshold
         if (noiseThreshold > 1.0)

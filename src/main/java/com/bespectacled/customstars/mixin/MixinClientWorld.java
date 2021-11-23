@@ -22,7 +22,7 @@ public class MixinClientWorld {
     
     @Unique private float customStarsSkyAngle;
     
-    @Inject(method = "method_23777", at = @At("HEAD"))
+    @Inject(method = "getSkyColor", at = @At("HEAD"))
     private void injectGetSkyColor(Vec3d pos, float tickDelta, CallbackInfoReturnable<Vec3d> info) {
         this.customStarsSkyAngle = ((LunarWorldView)(Object)this).getSkyAngle(tickDelta);
         this.customStarsSkyAngle = MathHelper.cos(this.customStarsSkyAngle * ((float)Math.PI * 2)) * 2.0f + 0.5f;
@@ -30,7 +30,7 @@ public class MixinClientWorld {
     }
     
     @ModifyVariable(
-        method = "method_23777",
+        method = "getSkyColor",
         at = @At(value = "STORE"),
         ordinal = 3
     )
@@ -42,7 +42,7 @@ public class MixinClientWorld {
     }
     
     @ModifyVariable(
-        method = "method_23777",
+        method = "getSkyColor",
         at = @At(value = "STORE"),
         ordinal = 4
     )
@@ -54,7 +54,7 @@ public class MixinClientWorld {
     }
     
     @ModifyVariable(
-        method = "method_23777",
+        method = "getSkyColor",
         at = @At(value = "STORE"),
         ordinal = 5
     )
