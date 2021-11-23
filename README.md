@@ -1,9 +1,5 @@
 # Custom Stars
 
-## Setup
-
-...
-
 ## License
 
-This project is licensed under LGPLv3.
+This project is licensed under MIT.
