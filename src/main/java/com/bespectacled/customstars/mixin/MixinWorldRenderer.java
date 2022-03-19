@@ -65,7 +65,7 @@ public class MixinWorldRenderer {
         return STARS_CONFIG.starCount;
     }
 
-    @Redirect(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLjava/lang/Runnable;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 3))
+    @Redirect(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 3))
     private void modifyStarColor(float r, float g, float b, float a) {
         float red = r * STARS_CONFIG.red / 255F;
         float green = g * STARS_CONFIG.green / 255F;
@@ -75,7 +75,7 @@ public class MixinWorldRenderer {
         RenderSystem.setShaderColor(red, green, blue, alpha);
     }
     
-    @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLjava/lang/Runnable;)V", at = @At("HEAD"))
+    @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"))
     private void reloadStars(CallbackInfo info) {
         if (CustomStars.STARS_RERENDER_OBSERVER.update()) {
             CustomStars.log(Level.INFO, "Star settings modified, reloading buffer...");
