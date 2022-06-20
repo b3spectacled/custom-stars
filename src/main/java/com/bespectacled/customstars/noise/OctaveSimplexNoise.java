@@ -1,13 +1,13 @@
 package com.bespectacled.customstars.noise;
 
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
-import net.minecraft.world.gen.random.AbstractRandom;
+import net.minecraft.util.math.random.Random;
 
 public class OctaveSimplexNoise {
     private final SimplexNoiseSampler[] generators;
     private final int octaves;
     
-    public OctaveSimplexNoise(AbstractRandom random, int octaves) {
+    public OctaveSimplexNoise(Random random, int octaves) {
         this.octaves = octaves;
         this.generators = new SimplexNoiseSampler[octaves];
         

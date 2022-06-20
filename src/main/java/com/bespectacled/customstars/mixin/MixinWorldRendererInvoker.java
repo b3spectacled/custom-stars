@@ -9,5 +9,5 @@ import net.minecraft.client.render.WorldRenderer;
 @Mixin(WorldRenderer.class)
 public interface MixinWorldRendererInvoker {
     @Invoker("renderStars")
-    public void rerenderStars(BufferBuilder builder);
+    public BufferBuilder.BuiltBuffer rerenderStars(BufferBuilder builder);
 }
