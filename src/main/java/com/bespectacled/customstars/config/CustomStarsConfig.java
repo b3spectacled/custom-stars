@@ -109,7 +109,7 @@ public class CustomStarsConfig implements ConfigData {
         public float alpha;
         
         public CustomStarColor() {
-            this(255, 255, 255, 5.0f);
+            this(255, 255, 255, 1.0f);
         }
         
         public CustomStarColor(int red, int green, int blue, float alpha) {
