@@ -13,6 +13,8 @@
     "text.autoconfig.customstars.option.maxSizeMultiplier.@Tooltip[1]": "Higher values will increase max star size.",
     "text.autoconfig.customstars.option.starCount": "Star Count",
     "text.autoconfig.customstars.option.starCount.@Tooltip": "Number of stars to render.",
+    "text.autoconfig.customstars.option.starBrightness": "Star Brightness",
+    "text.autoconfig.customstars.option.starBrightness.@Tooltip": "Multiplier for overall brightness of stars.",
     
     "text.autoconfig.customstars.option.starNoise": "Star Noise",
     "text.autoconfig.customstars.option.starNoise.@Tooltip": "Render stars using noise.",
@@ -33,6 +35,21 @@
     "text.autoconfig.customstars.option.alpha": "Alpha",
     "text.autoconfig.customstars.option.alpha.@Tooltip[0]": "Multiplier for overall star brightness.",
     "text.autoconfig.customstars.option.alpha.@Tooltip[1]": "Setting to 0 will disable stars.",
+    
+    "text.autoconfig.customstars.option.starColorType": "Star Color Type",
+    
+    "text.autoconfig.customstars.option.starColorSingle": "Single Star Color",
+    "text.autoconfig.customstars.option.starColorSingle.red": "Red",
+    "text.autoconfig.customstars.option.starColorSingle.green": "Green",
+    "text.autoconfig.customstars.option.starColorSingle.blue": "Blue",
+    "text.autoconfig.customstars.option.starColorSingle.alpha": "Alpha",
+    
+    "text.autoconfig.customstars.option.starColorCustom": "Custom Star Colors",
+    "text.autoconfig.customstars.option.CustomStarColor": "Custom Star Color",
+    "text.autoconfig.customstars.option.CustomStarColor.red": "Red",
+    "text.autoconfig.customstars.option.CustomStarColor.green": "Green",
+    "text.autoconfig.customstars.option.CustomStarColor.blue": "Blue",
+    "text.autoconfig.customstars.option.CustomStarColor.alpha": "Alpha",
     
     "text.autoconfig.customstars.option.skyRed": "Red",
     "text.autoconfig.customstars.option.skyRed.@Tooltip": "Red color component of night sky. (0-255)",
