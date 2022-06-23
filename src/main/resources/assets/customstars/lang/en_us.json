@@ -3,6 +3,7 @@
     "text.autoconfig.customstars.category.starsBasic": "Star Size/Count",
     "text.autoconfig.customstars.category.starsNoise": "Star Noise",
     "text.autoconfig.customstars.category.starsColor": "Star Color",
+    "text.autoconfig.customstars.category.moon": "Moon",
     "text.autoconfig.customstars.category.skyColor": "Night Sky Color",
     "text.autoconfig.customstars.category.endColor": "End Sky Color",
     
@@ -50,6 +51,11 @@
     "text.autoconfig.customstars.option.CustomStarColor.green": "Green",
     "text.autoconfig.customstars.option.CustomStarColor.blue": "Blue",
     "text.autoconfig.customstars.option.CustomStarColor.alpha": "Alpha",
+
+    "text.autoconfig.customstars.option.moonDeadzone": "Moon Deadzone",
+    "text.autoconfig.customstars.option.moonDeadzone.@Tooltip": "Prevent stars from rendering on the moon texture.",
+    "text.autoconfig.customstars.option.moonDeadzoneShape": "Moon Deadzone Shape",
+    "text.autoconfig.customstars.option.moonDeadzoneSize": "Moon Deadzone Size",
     
     "text.autoconfig.customstars.option.skyRed": "Red",
     "text.autoconfig.customstars.option.skyRed.@Tooltip": "Red color component of night sky. (0-255)",

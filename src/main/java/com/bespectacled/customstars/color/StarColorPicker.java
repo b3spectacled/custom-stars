@@ -8,15 +8,14 @@ import com.bespectacled.customstars.config.CustomStarsConfig.CustomStarColor;
 
 public class StarColorPicker {
     private static final CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
-    private static final Random RANDOM = new Random();
-    
-    public static CustomStarColor nextColor() {
+
+    public static CustomStarColor nextColor(Random random) {
         int starColorCustomSize = STARS_CONFIG.starColorCustom.size();
         
         return switch(STARS_CONFIG.starColorType) {
             case SINGLE -> STARS_CONFIG.starColorSingle;
-            case CUSTOM -> STARS_CONFIG.starColorCustom.get(RANDOM.nextInt(starColorCustomSize));
-            case RANDOM -> new CustomStarColor(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextFloat());
+            case CUSTOM -> STARS_CONFIG.starColorCustom.get(random.nextInt(starColorCustomSize));
+            case RANDOM -> new CustomStarColor(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextFloat());
         };
     }
 }
