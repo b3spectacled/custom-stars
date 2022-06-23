@@ -10,6 +10,7 @@ import com.bespectacled.customstars.CustomStars;
 import com.bespectacled.customstars.color.StarColorPicker;
 import com.bespectacled.customstars.config.CustomStarsConfig;
 import com.bespectacled.customstars.config.CustomStarsConfig.CustomStarColor;
+import com.bespectacled.customstars.moon.MoonDeadzoneShape;
 import com.bespectacled.customstars.noise.OctaveSimplexNoise;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -54,14 +55,14 @@ public class MixinWorldRenderer {
     @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"))
     private void reloadStars(CallbackInfo info) {
         if (CustomStars.shouldReloadStars()) {
-            CustomStars.log(Level.INFO, "Star settings modified, reloading buffer...");
+            CustomStars.log(Level.INFO, "Settings modified, reloading buffer...");
             
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
             this.starsBuffer = new VertexBuffer();
-            BufferBuilder.BuiltBuffer builtBuffer = ((MixinWorldRendererInvoker)this).rerenderStars(builder);
+            BufferBuilder.BuiltBuffer builtBuffer = this.renderCustomStars(builder);
 
             this.starsBuffer.bind();
             this.starsBuffer.upload(builtBuffer);
@@ -70,7 +71,7 @@ public class MixinWorldRenderer {
     }
     
     @Inject(method = "renderStars(Lnet/minecraft/client/render/BufferBuilder;)Lnet/minecraft/client/render/BufferBuilder$BuiltBuffer;", at = @At("HEAD"), cancellable = true)
-    private void injectRenderStarsWithNoise(BufferBuilder builder, CallbackInfoReturnable<BufferBuilder.BuiltBuffer> info) {
+    private void injectRenderStars(BufferBuilder builder, CallbackInfoReturnable<BufferBuilder.BuiltBuffer> info) {
         BufferBuilder.BuiltBuffer builtBuffer = this.renderCustomStars(builder);
             
         info.setReturnValue(builtBuffer);
@@ -143,6 +144,10 @@ public class MixinWorldRenderer {
         
         buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         
+        double[] xCoords = new double[4];
+        double[] yCoords = new double[4];
+        double[] zCoords = new double[4];
+        
         for (int i = 0; i < starCount; ++i) {
             double double5 = ipts[i];
             double double7 = jpts[i];
@@ -168,12 +173,13 @@ public class MixinWorldRenderer {
                 double double35 = Math.sin(double33);
                 double double37 = Math.cos(double33);
                 
-                CustomStarColor starColor = StarColorPicker.nextColor();
+                CustomStarColor starColor = StarColorPicker.nextColor(random);
                 float r = starColor.red / 255F;
                 float g = starColor.green / 255F;
                 float b = starColor.blue / 255F;
                 float a = starColor.alpha;
-                
+
+                boolean inMoon = false;
                 for (int v = 0; v < 4; ++v) {
                     double double42 = ((v & 0x2) - 1) * double11;
                     double double44 = ((v + 1 & 0x2) - 1) * double11;
@@ -185,11 +191,49 @@ public class MixinWorldRenderer {
                     double double58 = double56 * double23 - double52 * double25;
                     double double60 = double54;
                     double double62 = double52 * double23 + double56 * double25;
-                    buffer.vertex(double15 + double58, double17 + double60, double19 + double62).color(r, g, b, a).next();
+                    
+                    double x = double15 + double58;
+                    double y = double17 + double60;
+                    double z = double19 + double62;
+
+                    if (inMoon(x, z)) {
+                        inMoon = true;
+                        break;
+                    }
+                    
+                    xCoords[v] = x;
+                    yCoords[v] = y;
+                    zCoords[v] = z;
+                }
+
+                if (!inMoon) {
+                    for (int v = 0; v < 4; ++v) {
+                        double x = xCoords[v];
+                        double y = yCoords[v];
+                        double z = zCoords[v];
+                        
+                        buffer.vertex(x, y, z).color(r, g, b, a).next();
+                    }
                 }
             }
         }
         
         return buffer.end();
+    }
+    
+    @Unique
+    private boolean inMoon(double x, double z) {
+        double size = STARS_CONFIG.moonDeadzoneSize;
+        boolean inMoon = false;
+        
+        if (!STARS_CONFIG.moonDeadzone)
+            return false;
+       
+        inMoon = switch(STARS_CONFIG.moonDeadzoneShape) {
+            case SQUARE -> MoonDeadzoneShape.inSquare(x, z, size);
+            case CIRCLE -> MoonDeadzoneShape.inCircle(x, z, size);
+        };
+        
+        return inMoon;
     }
 }

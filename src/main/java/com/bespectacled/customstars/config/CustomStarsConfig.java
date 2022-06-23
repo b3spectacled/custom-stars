@@ -3,6 +3,7 @@ package com.bespectacled.customstars.config;
 import java.util.List;
 
 import com.bespectacled.customstars.color.StarColorType;
+import com.bespectacled.customstars.moon.MoonDeadzoneShape;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -23,10 +24,6 @@ public class CustomStarsConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 1)
     public int starCount = 1500;
     
-    @ConfigEntry.Category(value = "starsBasic")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    public float starBrightness = 1.0f;
-    
     @ConfigEntry.Category(value = "starsNoise")
     @ConfigEntry.Gui.Tooltip(count = 1)
     public boolean starNoise = false;
@@ -45,6 +42,10 @@ public class CustomStarsConfig implements ConfigData {
     public int starNoisePercentage = 50;
     
     @ConfigEntry.Category(value = "starsColor")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    public float starBrightness = 1.0f;
+    
+    @ConfigEntry.Category(value = "starsColor")
     public StarColorType starColorType = StarColorType.SINGLE;
     
     @ConfigEntry.Category(value = "starsColor")
@@ -57,6 +58,16 @@ public class CustomStarsConfig implements ConfigData {
         new CustomStarColor(0, 255, 0, 1.0f),
         new CustomStarColor(0, 0, 255, 1.0f)
     );
+    
+    @ConfigEntry.Category(value = "moon")
+    @ConfigEntry.Gui.Tooltip(count = 1)
+    public boolean moonDeadzone = false;
+    
+    @ConfigEntry.Category(value = "moon")
+    public MoonDeadzoneShape moonDeadzoneShape = MoonDeadzoneShape.SQUARE;
+    
+    @ConfigEntry.Category(value = "moon")
+    public double moonDeadzoneSize = 5.0;
 
     @ConfigEntry.Category(value = "skyColor")
     @ConfigEntry.Gui.Tooltip(count = 1)
