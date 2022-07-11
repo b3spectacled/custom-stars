@@ -121,9 +121,13 @@ public class MixinWorldRenderer {
                 double j = fieldRandom.nextFloat() * 2.0f - 1.0f;
                 double k = fieldRandom.nextFloat() * 2.0f - 1.0f;
                 
-                double weight = fieldSampler.sample(i, j, k); 
+                // Range approx -1.5 to 1.5
+                double weight = fieldSampler.sample(i, j, k);
+
+                double fuzz = (fieldRandom.nextDouble() - 0.5) * 3.0;
+                double fuzzWeight = STARS_CONFIG.starNoiseFuzzWeight;
                 
-                if (weight + fieldRandom.nextDouble() * 0.2 > noiseThreshold) {
+                if (weight + fuzz * fuzzWeight > noiseThreshold) {
                     ipts[stars] = i;
                     jpts[stars] = j;
                     kpts[stars] = k;
@@ -132,7 +136,6 @@ public class MixinWorldRenderer {
                 }
             }
         }
-
         while (stars < starCount) {
             ipts[stars] = random.nextFloat() * 2.0f - 1.0f;
             jpts[stars] = random.nextFloat() * 2.0f - 1.0f;

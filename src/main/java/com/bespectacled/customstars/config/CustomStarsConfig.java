@@ -37,6 +37,10 @@ public class CustomStarsConfig implements ConfigData {
     public double starNoiseThreshold = 0.5;
     
     @ConfigEntry.Category(value = "starsNoise")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public double starNoiseFuzzWeight = 0.2;
+    
+    @ConfigEntry.Category(value = "starsNoise")
     @ConfigEntry.Gui.Tooltip(count = 1)
     @ConfigEntry.BoundedDiscrete(max = 100, min = 0)
     public int starNoisePercentage = 50;

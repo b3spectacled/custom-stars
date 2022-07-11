@@ -24,6 +24,9 @@
     "text.autoconfig.customstars.option.starNoiseThreshold": "Star Noise Threshold",
     "text.autoconfig.customstars.option.starNoiseThreshold.@Tooltip[0]": "Noise threshold for star placement,",
     "text.autoconfig.customstars.option.starNoiseThreshold.@Tooltip[1]": "higher values mean stars will be grouped in smaller areas.",
+    "text.autoconfig.customstars.option.starNoiseFuzzWeight": "Star Noise Fuzz Weight",
+    "text.autoconfig.customstars.option.starNoiseFuzzWeight.@Tooltip[0]": "Weight for fuzzing noise values,",
+    "text.autoconfig.customstars.option.starNoiseFuzzWeight.@Tooltip[1]": "higher values mean areas will be fuzzier/grainier.",
     "text.autoconfig.customstars.option.starNoisePercentage": "Star Noise Percentage",
     "text.autoconfig.customstars.option.starNoisePercentage.@Tooltip": "Percentage of stars distributed using noise vs. vanilla randomized.",
     
