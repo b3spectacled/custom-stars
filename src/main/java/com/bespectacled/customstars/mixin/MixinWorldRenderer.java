@@ -10,7 +10,6 @@ import com.bespectacled.customstars.CustomStars;
 import com.bespectacled.customstars.color.StarColorPicker;
 import com.bespectacled.customstars.config.CustomStarsConfig;
 import com.bespectacled.customstars.config.CustomStarsConfig.CustomStarColor;
-import com.bespectacled.customstars.moon.MoonDeadzoneShape;
 import com.bespectacled.customstars.noise.OctaveSimplexNoise;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -224,16 +223,10 @@ public class MixinWorldRenderer {
     @Unique
     private boolean inMoon(double x, double z) {
         double size = STARS_CONFIG.moonDeadzoneSize;
-        boolean inMoon = false;
         
         if (!STARS_CONFIG.moonDeadzone)
             return false;
        
-        inMoon = switch(STARS_CONFIG.moonDeadzoneShape) {
-            case SQUARE -> MoonDeadzoneShape.inSquare(x, z, size);
-            case CIRCLE -> MoonDeadzoneShape.inCircle(x, z, size);
-        };
-        
-        return inMoon;
+        return STARS_CONFIG.moonDeadzoneShape.test(x, z, size);
     }
 }
