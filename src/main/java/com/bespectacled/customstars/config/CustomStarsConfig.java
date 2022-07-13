@@ -54,13 +54,13 @@ public class CustomStarsConfig implements ConfigData {
     
     @ConfigEntry.Category(value = "starsColor")
     @ConfigEntry.Gui.CollapsibleObject
-    public CustomStarColor starColorSingle = new CustomStarColor(255, 255, 255, 1.0f);
+    public ColorRGBA starColorSingle = new ColorRGBA(255, 255, 255, 1.0f);
 
     @ConfigEntry.Category(value = "starsColor")
-    public List<CustomStarColor> starColorCustom = List.of(
-        new CustomStarColor(255, 0, 0, 1.0f),
-        new CustomStarColor(0, 255, 0, 1.0f),
-        new CustomStarColor(0, 0, 255, 1.0f)
+    public List<ColorRGBA> starColorCustom = List.of(
+        new ColorRGBA(255, 0, 0, 1.0f),
+        new ColorRGBA(0, 255, 0, 1.0f),
+        new ColorRGBA(0, 0, 255, 1.0f)
     );
     
     @ConfigEntry.Category(value = "moon")
@@ -72,46 +72,24 @@ public class CustomStarsConfig implements ConfigData {
     
     @ConfigEntry.Category(value = "moon")
     public double moonDeadzoneSize = 5.0;
-
-    @ConfigEntry.Category(value = "skyColor")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 255)
-    public int skyRed = 0;
+    
+    @ConfigEntry.Category(value = "moon")
+    @ConfigEntry.Gui.TransitiveObject
+    public ColorRGBA moonColor = new ColorRGBA(255, 255, 255, 1.0f);
     
     @ConfigEntry.Category(value = "skyColor")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 255)
-    public int skyGreen = 0;
-    
-    @ConfigEntry.Category(value = "skyColor")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 255)
-    public int skyBlue = 0;
+    @ConfigEntry.Gui.TransitiveObject
+    public ColorRGBA skyColor = new ColorRGBA(0, 0, 0, 1.0f);
     
     @ConfigEntry.Category(value = "endColor")
     @ConfigEntry.Gui.Tooltip(count = 1)
     public float endSize = 1.0f;
     
     @ConfigEntry.Category(value = "endColor")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 255)
-    public int endRed = 40;
+    @ConfigEntry.Gui.TransitiveObject
+    public ColorRGBA endColor = new ColorRGBA(40, 40, 40, 1.0f);
 
-    @ConfigEntry.Category(value = "endColor")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 255)
-    public int endGreen = 40;
-
-    @ConfigEntry.Category(value = "endColor")
-    @ConfigEntry.Gui.Tooltip(count = 1)
-    @ConfigEntry.BoundedDiscrete(max = 255)
-    public int endBlue = 40;
-    
-    @ConfigEntry.Category(value = "endColor")
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public float endAlpha = 1.0f;
-
-    public static class CustomStarColor {
+    public static class ColorRGBA {
         @ConfigEntry.BoundedDiscrete(max = 255)
         public int red;
         
@@ -123,17 +101,29 @@ public class CustomStarsConfig implements ConfigData {
         
         public float alpha;
         
-        public CustomStarColor() {
+        public ColorRGBA() {
             this(255, 255, 255, 1.0f);
         }
         
-        public CustomStarColor(int red, int green, int blue, float alpha) {
+        public ColorRGBA(int red, int green, int blue, float alpha) {
             this.red = red;
             this.green = green;
             this.blue = blue;
             this.alpha = alpha;
         }
         
+        public float normalR() {
+            return this.red / 255f;
+        }
+        
+        public float normalG() {
+            return this.green / 255f;
+        }
+        
+        public float normalB() {
+            return this.blue / 255f;
+        }
+
         @Override
         public String toString() {
             return String.format("%d/%d/%d/%f", this.red, this.green, this.blue, this.alpha);

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Unique;
 import com.bespectacled.customstars.CustomStars;
 import com.bespectacled.customstars.color.StarColorPicker;
 import com.bespectacled.customstars.config.CustomStarsConfig;
-import com.bespectacled.customstars.config.CustomStarsConfig.CustomStarColor;
+import com.bespectacled.customstars.config.CustomStarsConfig.ColorRGBA;
 import com.bespectacled.customstars.noise.OctaveSimplexNoise;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -41,17 +41,27 @@ public class MixinWorldRenderer {
     
     @Shadow private VertexBuffer starsBuffer;
 
-    @Redirect(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 3))
+    /* Stars */
+    @Redirect(
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 3)
+    )
     private void modifyStarColor(float r, float g, float b, float a) {
         RenderSystem.setShaderColor(r, g, b, a * STARS_CONFIG.starBrightness);
     }
     
-    @Redirect(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;getPositionShader()Lnet/minecraft/client/render/Shader;"))
+    @Redirect(
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;getPositionShader()Lnet/minecraft/client/render/Shader;")
+    )
     private Shader modifyStarDraw(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, Camera arg3, boolean bl, Runnable runnable) {
         return GameRenderer.getPositionColorShader();
     }
     
-    @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"))
+    @Inject(
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        at = @At("HEAD")
+    )
     private void reloadStars(CallbackInfo info) {
         if (CustomStars.shouldReloadStars()) {
             CustomStars.log(Level.INFO, "Settings modified, reloading buffer...");
@@ -69,20 +79,43 @@ public class MixinWorldRenderer {
         }
     }
     
-    @Inject(method = "renderStars(Lnet/minecraft/client/render/BufferBuilder;)Lnet/minecraft/client/render/BufferBuilder$BuiltBuffer;", at = @At("HEAD"), cancellable = true)
+    @Inject(
+        method = "renderStars(Lnet/minecraft/client/render/BufferBuilder;)Lnet/minecraft/client/render/BufferBuilder$BuiltBuffer;",
+        at = @At("HEAD"),
+        cancellable = true
+    )
     private void injectRenderStars(BufferBuilder builder, CallbackInfoReturnable<BufferBuilder.BuiltBuffer> info) {
         BufferBuilder.BuiltBuffer builtBuffer = this.renderCustomStars(builder);
             
         info.setReturnValue(builtBuffer);
     }
     
-    /* End Sky */
-    @Redirect(method = "renderEndSky", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumer;color(IIII)Lnet/minecraft/client/render/VertexConsumer;"))
-    private VertexConsumer modifyEndSkyColor(VertexConsumer self, int r, int g, int b, int a) {
-        return self.color(STARS_CONFIG.endRed, STARS_CONFIG.endGreen, STARS_CONFIG.endBlue, (int)(a * STARS_CONFIG.endAlpha));
+    /* Moon */
+    @Inject(
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", ordinal = 1)
+    )
+    private void injectMoonColor(CallbackInfo info) {
+        ColorRGBA color = STARS_CONFIG.moonColor;
+        
+        RenderSystem.setShaderColor(color.normalR(), color.normalG(), color.normalB(), color.alpha);
     }
     
-    @ModifyConstant(method = "renderEndSky", constant = @Constant(floatValue = 16.0f))
+    /* End Sky */
+    @Redirect(
+        method = "renderEndSky",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumer;color(IIII)Lnet/minecraft/client/render/VertexConsumer;")
+    )
+    private VertexConsumer modifyEndSkyColor(VertexConsumer self, int r, int g, int b, int a) {
+        ColorRGBA color = STARS_CONFIG.endColor;
+        
+        return self.color(color.red, color.green, color.blue, (int)(255f * color.alpha));
+    }
+    
+    @ModifyConstant(
+        method = "renderEndSky",
+        constant = @Constant(floatValue = 16.0f)
+    )
     private float modifyTextureSize(float size) {
         return size * STARS_CONFIG.endSize;
     }
@@ -175,7 +208,7 @@ public class MixinWorldRenderer {
                 double double35 = Math.sin(double33);
                 double double37 = Math.cos(double33);
                 
-                CustomStarColor starColor = StarColorPicker.nextColor(random);
+                ColorRGBA starColor = StarColorPicker.nextColor(random);
                 float r = starColor.red / 255F;
                 float g = starColor.green / 255F;
                 float b = starColor.blue / 255F;

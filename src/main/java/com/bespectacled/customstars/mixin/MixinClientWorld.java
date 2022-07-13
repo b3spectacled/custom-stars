@@ -35,7 +35,7 @@ public class MixinClientWorld {
         ordinal = 3
     )
     private float injectSkyR(float r) {
-        float nightSkyR = STARS_CONFIG.skyRed / 255f;
+        float nightSkyR = STARS_CONFIG.skyColor.normalR();
         nightSkyR *= 1.0f - this.customStarsSkyAngle;
         
         return r + nightSkyR;
@@ -47,7 +47,7 @@ public class MixinClientWorld {
         ordinal = 4
     )
     private float injectSkyG(float g) {
-        float nightSkyG = STARS_CONFIG.skyGreen / 255f;
+        float nightSkyG = STARS_CONFIG.skyColor.normalG();
         nightSkyG *= 1.0f - this.customStarsSkyAngle;
         
         return g + nightSkyG;
@@ -59,7 +59,7 @@ public class MixinClientWorld {
         ordinal = 5
     )
     private float injectSkyB(float b) {
-        float nightSkyB = STARS_CONFIG.skyBlue / 255f;
+        float nightSkyB = STARS_CONFIG.skyColor.normalB();
         nightSkyB *= 1.0f - this.customStarsSkyAngle;
         
         return b + nightSkyB;
