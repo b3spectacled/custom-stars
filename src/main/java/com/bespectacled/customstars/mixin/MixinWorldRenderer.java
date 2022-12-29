@@ -1,7 +1,9 @@
 package com.bespectacled.customstars.mixin;
 
 import java.util.Random;
-import org.apache.logging.log4j.Level;
+
+import org.joml.Matrix4f;
+import org.slf4j.event.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -21,18 +23,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.random.Xoroshiro128PlusPlusRandom;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
@@ -43,7 +44,7 @@ public class MixinWorldRenderer {
 
     /* Stars */
     @Redirect(
-        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderColor(FFFF)V", ordinal = 3)
     )
     private void modifyStarColor(float r, float g, float b, float a) {
@@ -51,15 +52,15 @@ public class MixinWorldRenderer {
     }
     
     @Redirect(
-        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;getPositionShader()Lnet/minecraft/client/render/Shader;")
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;getPositionProgram()Lnet/minecraft/client/gl/ShaderProgram;")
     )
-    private Shader modifyStarDraw(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, Camera arg3, boolean bl, Runnable runnable) {
-        return GameRenderer.getPositionColorShader();
+    private ShaderProgram modifyStarDraw(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, Camera arg3, boolean bl, Runnable runnable) {
+        return GameRenderer.getPositionColorProgram();
     }
     
     @Inject(
-        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
         at = @At("HEAD")
     )
     private void reloadStars(CallbackInfo info) {
@@ -68,7 +69,7 @@ public class MixinWorldRenderer {
             
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder builder = tess.getBuffer();
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+            RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 
             this.starsBuffer = new VertexBuffer();
             BufferBuilder.BuiltBuffer builtBuffer = this.renderCustomStars(builder);
@@ -92,7 +93,7 @@ public class MixinWorldRenderer {
     
     /* Moon */
     @Inject(
-        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
+        method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", ordinal = 1)
     )
     private void injectMoonColor(CallbackInfo info) {

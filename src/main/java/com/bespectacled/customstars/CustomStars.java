@@ -1,8 +1,8 @@
 package com.bespectacled.customstars;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 import com.bespectacled.customstars.config.CustomStarsConfig;
 
@@ -17,12 +17,17 @@ public class CustomStars implements ModInitializer {
     
     public static final CustomStarsConfig STARS_CONFIG = AutoConfig.register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
     
-    private static final Logger LOGGER = LogManager.getLogger("CustomStars");
+    private static final Logger LOGGER = LoggerFactory.getLogger("CustomStars");
     
     private static boolean reloadStars = false;
 
     public static void log(Level level, String message) {
-        LOGGER.log(level, "[" + MOD_NAME + "] {}", message);
+        switch(level) {
+            case DEBUG: LOGGER.debug(message);
+            case ERROR: LOGGER.error(message);
+            case WARN: LOGGER.warn(message);
+            default: LOGGER.info(message);
+        }
     }
     
     public static boolean shouldReloadStars() {
