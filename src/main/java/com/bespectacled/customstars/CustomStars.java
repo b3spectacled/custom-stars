@@ -22,6 +22,8 @@ public class CustomStars implements ModInitializer {
     private static boolean reloadStars = false;
 
     public static void log(Level level, String message) {
+        message = String.format("[%s] %s", MOD_NAME, message);
+        
         switch(level) {
             case DEBUG: LOGGER.debug(message);
             case ERROR: LOGGER.error(message);
