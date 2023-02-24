@@ -1,13 +1,12 @@
-package com.bespectacled.customstars.config;
+package mod.bespectacled.customstars.config;
 
 import java.util.List;
-
-import com.bespectacled.customstars.color.StarColorType;
-import com.bespectacled.customstars.moon.MoonDeadzoneShape;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import mod.bespectacled.customstars.color.StarColorType;
+import mod.bespectacled.customstars.moon.MoonDeadzoneShape;
 
 @Config(name = "customstars")
 public class CustomStarsConfig implements ConfigData {

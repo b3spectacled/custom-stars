@@ -1,4 +1,4 @@
-package com.bespectacled.customstars.noise;
+package mod.bespectacled.customstars.noise;
 
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.math.random.Random;

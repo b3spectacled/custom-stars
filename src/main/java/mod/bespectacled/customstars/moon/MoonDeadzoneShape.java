@@ -1,4 +1,4 @@
-package com.bespectacled.customstars.moon;
+package mod.bespectacled.customstars.moon;
 
 import org.apache.commons.lang3.function.TriFunction;
 

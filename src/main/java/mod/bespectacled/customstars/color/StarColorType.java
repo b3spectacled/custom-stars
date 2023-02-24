@@ -1,4 +1,4 @@
-package com.bespectacled.customstars.color;
+package mod.bespectacled.customstars.color;
 
 public enum StarColorType {
     SINGLE, RANDOM, CUSTOM

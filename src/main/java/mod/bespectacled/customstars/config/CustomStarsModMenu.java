@@ -1,4 +1,4 @@
-package com.bespectacled.customstars.config;
+package mod.bespectacled.customstars.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

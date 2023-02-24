@@ -1,13 +1,12 @@
-package com.bespectacled.customstars;
+package mod.bespectacled.customstars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
-import com.bespectacled.customstars.config.CustomStarsConfig;
-
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import mod.bespectacled.customstars.config.CustomStarsConfig;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.ActionResult;
 
@@ -17,7 +16,7 @@ public class CustomStars implements ModInitializer {
     
     public static final CustomStarsConfig STARS_CONFIG = AutoConfig.register(CustomStarsConfig.class, GsonConfigSerializer::new).getConfig();
     
-    private static final Logger LOGGER = LoggerFactory.getLogger("CustomStars");
+    private static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     
     private static boolean reloadStars = false;
 

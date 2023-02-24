@@ -1,4 +1,4 @@
-package com.bespectacled.customstars.mixin;
+package mod.bespectacled.customstars.mixin;
 
 import java.util.Random;
 
@@ -8,12 +8,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import com.bespectacled.customstars.CustomStars;
-import com.bespectacled.customstars.color.StarColorPicker;
-import com.bespectacled.customstars.config.CustomStarsConfig;
-import com.bespectacled.customstars.config.CustomStarsConfig.ColorRGBA;
-import com.bespectacled.customstars.noise.OctaveSimplexNoise;
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import mod.bespectacled.customstars.CustomStars;
+import mod.bespectacled.customstars.color.StarColorPicker;
+import mod.bespectacled.customstars.config.CustomStarsConfig;
+import mod.bespectacled.customstars.config.CustomStarsConfig.ColorRGBA;
+import mod.bespectacled.customstars.noise.OctaveSimplexNoise;
 
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;

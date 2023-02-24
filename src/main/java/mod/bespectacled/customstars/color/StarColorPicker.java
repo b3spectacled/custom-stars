@@ -1,10 +1,10 @@
-package com.bespectacled.customstars.color;
+package mod.bespectacled.customstars.color;
 
 import java.util.Random;
 
-import com.bespectacled.customstars.CustomStars;
-import com.bespectacled.customstars.config.CustomStarsConfig;
-import com.bespectacled.customstars.config.CustomStarsConfig.ColorRGBA;
+import mod.bespectacled.customstars.CustomStars;
+import mod.bespectacled.customstars.config.CustomStarsConfig;
+import mod.bespectacled.customstars.config.CustomStarsConfig.ColorRGBA;
 
 public class StarColorPicker {
     private static final CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
