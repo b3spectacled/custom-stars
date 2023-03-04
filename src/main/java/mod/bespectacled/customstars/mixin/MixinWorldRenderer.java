@@ -35,6 +35,7 @@ import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.random.Xoroshiro128PlusPlusRandom;
 
 @Mixin(value = WorldRenderer.class, priority = 1)
@@ -42,6 +43,7 @@ public class MixinWorldRenderer {
     @Unique private static final CustomStarsConfig STARS_CONFIG = CustomStars.STARS_CONFIG;
     
     @Shadow private VertexBuffer starsBuffer;
+    @Shadow private ClientWorld world;
 
     /* Stars */
     @Redirect(
@@ -97,10 +99,11 @@ public class MixinWorldRenderer {
         method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/util/Identifier;)V", ordinal = 1)
     )
-    private void injectMoonColor(CallbackInfo info) {
+    private void injectMoonColor(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, Camera camera, boolean bl, Runnable runnable, CallbackInfo info) {
         ColorRGBA color = STARS_CONFIG.moonColor;
+        float rainGradient = 1.0f - this.world.getRainGradient(tickDelta);
         
-        RenderSystem.setShaderColor(color.normalR(), color.normalG(), color.normalB(), color.alpha);
+        RenderSystem.setShaderColor(color.normalR(), color.normalG(), color.normalB(), color.alpha * rainGradient);
     }
     
     /* End Sky */
